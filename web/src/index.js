@@ -3,5 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'))
+import { ApolloProvider } from '@apollo/react-hooks'
+import client from './apollo'
+
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>, document.getElementById('root'))
 serviceWorker.unregister();
