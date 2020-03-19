@@ -1,9 +1,14 @@
-type rhapsodist {
-  name: String!
-  age: Int!
-  gender: String!
+type Movie {
+  id: Int!
+  title: String!
+  rating: Float
+  description_intro: String
+  language: String
+  medium_cover_image: String!
 }
 
 type Query {
-  person: rhapsodist!
+  movies(limit: Int, rating: Float): [Movie]!
+  movie(id: Int!): Movie
+  suggestions(id: Int!): [Movie]!
 }

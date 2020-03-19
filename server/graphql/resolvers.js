@@ -1,15 +1,15 @@
-const rhapsodist = {
-  name: "rhapsodist",
-  age: 31,
-  gender: "male"
-}
+import { getMovies, getMovie, getSuggestions } from '../db/index'
 
-const resolvers = {
+export default {
   Query: {
-    person: () => {
-      return rhapsodist
+    movies: (_, {limit, rating}) => {
+      return getMovies(limit, rating)
+    },
+    movie: (_, { id }) => {
+      return getMovie(id)
+    },
+    suggestions: (_, { id }) => {
+      return getSuggestions(id)
     }
   }
 }
-
-export default resolvers
