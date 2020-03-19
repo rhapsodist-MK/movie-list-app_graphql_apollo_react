@@ -10,9 +10,36 @@ const GET_MOVIES = gql`
     movies {
       id
       medium_cover_image
+      isLiked @client
     }
   }
 `
+
+export default () => {
+  const { loading, error, data } = useQuery(GET_MOVIES)
+  
+  return (
+    <Container>
+      <Header>
+        <Title>Movie List</Title>
+        <Subtitle>GraphQl</Subtitle>
+      </Header>
+      {loading && <Loading>Loading...</Loading>}
+      <Movies>
+        {/* optional chaining javascript */}
+        {data?.movies?.map(m => (
+          <Movie
+            key={m.id}
+            id={m.id}
+            bg={m.medium_cover_image}
+            isLiked={m.isLiked}
+          />
+        ))}
+      </Movies>
+    </Container>
+  )
+}
+
 
 const Container = styled.div`
   display: flex;
@@ -57,27 +84,3 @@ const Movies = styled.div`
   position: relative;
   top: -50px;
 `
-
-export default () => {
-  const { loading, error, data } = useQuery(GET_MOVIES)
-  
-  return (
-    <Container>
-      <Header>
-        <Title>Movie List</Title>
-        <Subtitle>GraphQl</Subtitle>
-      </Header>
-      {loading && <Loading>Loading...</Loading>}
-      <Movies>
-        {/* optional chaining javascript */}
-        {data?.movies?.map(m => (
-          <Movie
-            key={m.id}
-            id={m.id}
-            bg={m.medium_cover_image}
-          />
-        ))}
-      </Movies>
-    </Container>
-  )
-}

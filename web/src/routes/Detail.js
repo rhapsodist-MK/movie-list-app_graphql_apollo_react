@@ -8,14 +8,18 @@ import styled from 'styled-components'
 const GET_MOVIE = gql`
   query getMovie($id: Int!) {
     movie(id: $id) {
+      id
       title
       medium_cover_image
       language
       rating
       description_intro
+      isLiked @client
     }
   }
 `
+
+// id를 같이 load하지 않으면 apollo가 movies에 저장되있는 isLiked cache를 해당 movie인지를 인식 못함
 
 export default () => {
   const { id } = useParams()
@@ -25,7 +29,7 @@ export default () => {
     <Container>
       <Column>
         <Title>
-          {loading ? "Loading..." : `${data?.movie?.title}`}
+          {loading ? "Loading..." : `${data?.movie?.title} ${data.movie.isLiked ? "💖" : "😞"}`}
         </Title>
         <Subtitle>
           {data?.movie?.language} · {data?.movie?.rating}
